@@ -15,7 +15,13 @@
  <genre>GENRE1</genre>
  <genre>GENRE2</genre>
  <mpaa>RATED</mpaa>
- <userrating>RATING<userrating>
+ <userrating></userrating>
+ <ratings>
+   <rating name="imdb" max="10" default="true">
+      <value>RATING</value>
+      <votes></votes>
+   </rating>
+ </ratings>
  <plot>PLOT</plot>
 
  <!-- cast & credits -->
