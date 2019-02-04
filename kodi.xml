@@ -15,6 +15,7 @@
  <genre>GENRE1</genre>
  <genre>GENRE2</genre>
  <mpaa>RATED</mpaa>
+ <userrating>RATING<userrating>
  <plot>PLOT</plot>
 
  <!-- cast & credits -->
