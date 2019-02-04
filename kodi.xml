@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding=UTF-8" standalone="yes" ?>
+
+<!-- MOVIE YEAR -->
+<movie>
+ <id>ID</id>
+ <title>MOVIE</title>
+ <originaltitle>OTITLE</originaltitle>
+ <sorttitle>SORT</sorttitle>
+ <year>YEAR</year>
+ <set>
+  <name></name>
+ </set>
+ <tag></tag>
+ <tag></tag>
+ <genre>GENRE1</genre>
+ <genre>GENRE2</genre>
+ <mpaa>RATED</mpaa>
+ <plot>PLOT</plot>
+
+ <!-- cast & credits -->
+ <studio>STUDIO</studio>
+ <director clear="true">DIRECTOR1</director>
+ <director>DIRECTOR2</director>
+ <actor>
+  <name>ACTOR0</name>
+  <order>0</order>
+ </actor>
+ <actor>
+  <name>ACTOR1</name>
+  <order>1</order>
+ </actor>
+ <actor>
+  <name>ACTOR2</name>
+  <order>2</order>
+ </actor>
+ <actor>
+  <name>ACTOR3</name>
+  <order>3</order>
+ </actor>
+
+ <!-- technical info -->
+ <fileinfo>
+  <streamdetails>
+   <video>
+    <codec>VIDEO</codec>
+    <aspect>ASPECT</aspect>
+    <film>FILM</film>
+    <width>WIDTH</width>
+    <height>HEIGHT</height>
+    <durationinseconds>DURATION</durationinseconds>
+    <stereomode>STEREO</stereomode>
+   </video>
+
+   <audio>
+    <codec>AUDIO</codec>
+    <language>LANGUAGE1</language>
+    <channels>CHANNELS1</channels>
+   </audio>
+
+   <subtitle>
+    <language>SUB1</language>
+   </subtitle>
+   <subtitle>
+    <language>SUB2</language>
+   </subtitle>
+
+  </streamdetails>
+ </fileinfo>
+</movie>
+https://www.imdb.com/title/ID/
