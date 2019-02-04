@@ -2,7 +2,7 @@
 
 <!-- MOVIE YEAR -->
 <movie>
- <id>ID</id>
+ <id>IMDBID</id>
  <title>MOVIE</title>
  <originaltitle>OTITLE</originaltitle>
  <sorttitle>SORT</sorttitle>
@@ -67,4 +67,4 @@
   </streamdetails>
  </fileinfo>
 </movie>
-https://www.imdb.com/title/ID/
+https://www.imdb.com/title/IMDBID/
