@@ -1,5 +1,3 @@
-
-
 # imdb2nfo
 
 This is a bash script that parses movie information from IMDB and outputs an XML-styled .nfo that can be read by Kodi. 
