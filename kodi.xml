@@ -28,6 +28,8 @@
  <studio>STUDIO</studio>
  <director clear="true">DIRECTOR1</director>
  <director>DIRECTOR2</director>
+ <credits clear="true">WRITER1</credits>
+ <credits>WRITER2</credits>
  <actor>
   <name>ACTOR0</name>
   <order>0</order>
