@@ -1,5 +1,5 @@
 #!/bin/bash
-# imdb2nfo 2019 / creativecommons.org/licenses/BY-NC-ND/4.0
+# imdb2nfo v2 / creativecommons.org/licenses/BY-NC-ND/4.0
 
 # This program automates the process of parsing IMDB movie information and outputs to a Kodi-compatible NFO file.
 # It uses no special dependancies other than curl.
@@ -27,7 +27,8 @@ film() { <<< "$imdbtt" grep -A 3 Printed\ Film\ Format | awk 'FNR == 3 {print}' 
 #mpaa() { <<< "$imdb" grep contentRating | sed -e 's/.*: "//' | sed -e 's/".*//' ; }
 plot() { <<< "$imdbps" grep "\<p\>.*" | awk 'FNR == 1 {print}' | sed 's/\<p\>//' | sed 's/\<\/p\>//' ; }
 #aspectratio() { <<< "$imdb" grep Aspect\ Ratio | sed -e 's/.*h4>//' -e 's/\ //g' ; }
-#rating() { <<< "$imdb" grep ratingValue | sed -e 's/.*: "//' -e 's/".*//' | awk 'FNR == 1 {print}' ; }
+
+rating() { <<< "$imdbr" grep ipl-rating-star__rating | awk 'FNR == 1 {print}' | sed 's/[^0-9]*//' | sed 's/<.*//' ; }
 
 studio() { <<< "$imdbcc" grep -A10 "Production\ Companies" | grep ^\> | sed 's/^\>//g' | sed 's/\<\/a\>//g' | awk 'FNR == 1 {print}' ; }
 
@@ -126,10 +127,11 @@ nfo() {
 # input imdb id
 read -p "enter imdb id: tt" id
 id="tt$id"
-imdbfc=$(curl -s https://www.imdb.com/title/$id/ratings)
-imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits)
-imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary)
-imdbcc=$(curl -s https://www.imdb.com/title/$id/companycredits)
+imdb=$(curl -s https://www.imdb.com/title/$id/ | sed 's/\:/\:\n/g') &&
+imdbr=$(curl -s https://www.imdb.com/title/$id/ratings) &&
+imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) &&
+imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary) &&
+imdbcc=$(curl -s https://www.imdb.com/title/$id/companycredits) &&
 imdbtt=$(curl -s https://www.imdb.com/title/$id/technical)
 
 # sdout to verify all is correct before writing to file
