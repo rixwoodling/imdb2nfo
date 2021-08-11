@@ -21,25 +21,26 @@
 #originaltitle() { <<< "$imdb" grep originalTitle | sed -e 's/.*Title">//' -e 's/<.*//' ; }
 #sorttitle() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/<[^>]*>//g' -e 's/^[ \t]*//' | sed -e 's/^The //' -e 's/^A //' | awk 'NF{NF-=3};1' ; }
 #year() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/[^\(0-9\)]//g' -e 's/^.*(//' -e 's/).*//' ; }
-film() { <<< "$imdbtt" grep -A 3 Printed\ Film\ Format | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' ; }
 #genre1() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 2 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
 #genre2() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
 #mpaa() { <<< "$imdb" grep contentRating | sed -e 's/.*: "//' | sed -e 's/".*//' ; }
-plot() { <<< "$imdbps" grep "\<p\>.*" | awk 'FNR == 1 {print}' | sed 's/\<p\>//' | sed 's/\<\/p\>//' ; }
+plot() { <<< "$imdbps" grep "\<p\>.*" | awk 'FNR == 1 {print}' | sed 's/.*<p>//' | sed 's/<\/p>//' ; } # works!
+
+film() { <<< "$imdbt" grep -A 3 Printed\ Film\ Format | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' ; }
 #aspectratio() { <<< "$imdb" grep Aspect\ Ratio | sed -e 's/.*h4>//' -e 's/\ //g' ; }
-
-rating() { <<< "$imdbr" grep ipl-rating-star__rating | awk 'FNR == 1 {print}' | sed 's/[^0-9]*//' | sed 's/<.*//' ; }
-
-studio() { <<< "$imdbcc" grep -A10 "Production\ Companies" | grep ^\> | sed 's/^\>//g' | sed 's/\<\/a\>//g' | awk 'FNR == 1 {print}' ; }
-
-director() { <<< "$imdbfc" grep -B4 '\(directed\ by\)' | grep '\>\.*$' | sed 's/^\>\ //g' | awk 'FNR == 1 {print}' ; }
-codirector() { <<< "$imdbfc" grep -B4 '\(directed\ by\)' | grep '\>\.*$' | sed 's/^\>\ //g' | awk 'FNR == 2 {print}' ; }
-writer() { <<< "$imdbfc" grep -B4 '\(story\ by\)'\|'\(written\ by\)' | grep '\>\.*$' | sed 's/^\>\ //g' | awk 'FNR == 1 {print}' ; }
-cowriter() { <<< "$imdbfc" grep -B4 '\(story\ by\)'\|'\(written\ by\)' | grep '\>\.*$' | sed 's/^\>\ //g' | awk 'FNR == 2 {print}' ; }
-actor0() { <<< "$imdbfc" grep -A50 'id\=\"cast\"' | grep '\>\.*$' | grep -v '^.*Cast.*$' | sed 's/^\>\ //g' | awk 'FNR == 1 {print}' ; }
-actor1() { <<< "$imdbfc" grep -A50 'id\=\"cast\"' | grep '\>\.*$' | grep -v '^.*Cast.*$' | sed 's/^\>\ //g' | awk 'FNR == 2 {print}' ; }
-actor2() { <<< "$imdbfc" grep -A50 'id\=\"cast\"' | grep '\>\.*$' | grep -v '^.*Cast.*$' | sed 's/^\>\ //g' | awk 'FNR == 3 {print}' ; }
-actor3() { <<< "$imdbfc" grep -A50 'id\=\"cast\"' | grep '\>\.*$' | grep -v '^.*Cast.*$' | sed 's/^\>\ //g' | awk 'FNR == 4 {print}' ; }
+# ratings
+rating() { <<< "$imdbr" grep ipl-rating-star__rating | awk 'FNR == 1 {print}' | sed 's/[^0-9]*//' | sed 's/<.*//' ; } # works!
+# companycredits
+studio() { <<< "$imdbcc" grep -A10 "Production\ Companies" | grep ^'>' | sed 's/^.//g' | sed 's/<[^>]*>.*//g' | awk 'FNR == 1 {print}' ; } # works!
+# fullcredits
+director() { <<< "$imdbfc" grep -A100 "id\=\"director" | grep -B50 "id\=\"writer" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; } # works!
+codirector() { <<< "$imdbfc" grep -A100 "id\=\"director" | grep -B50 "id\=\"writer" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } # works!
+writer() { <<< "$imdbfc" grep -A100 "id\=\"writer" | grep -B50 "id\=\"cast" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; } # works!
+cowriter() { <<< "$imdbfc" grep -A100 "id\=\"writer" | grep -B50 "id\=\"cast" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } # works!
+actor0() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; } # works!
+actor1() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } # works!
+actor2() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 3 {print}' ; } # works!
+actor3() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 4 {print}' ; } # works!
 
 # create multiline xml and assign to variable named xml:
 nfo() {
@@ -132,7 +133,7 @@ imdbr=$(curl -s https://www.imdb.com/title/$id/ratings) &&
 imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) &&
 imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary) &&
 imdbcc=$(curl -s https://www.imdb.com/title/$id/companycredits) &&
-imdbtt=$(curl -s https://www.imdb.com/title/$id/technical)
+imdbt=$(curl -s https://www.imdb.com/title/$id/technical)
 
 # sdout to verify all is correct before writing to file
 echo "id: $id" && echo "title: $(title)" && echo "original title: $(originaltitle)"
@@ -164,5 +165,4 @@ while true; do
 done
 
 # ---
-
 
