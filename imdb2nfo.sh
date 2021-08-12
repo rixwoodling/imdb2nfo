@@ -22,7 +22,7 @@
 #mpaa() { <<< "$imdb" grep contentRating | sed -e 's/.*: "//' | sed -e 's/".*//' ; }
 # releaseinfo
 #year() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/[^\(0-9\)]//g' -e 's/^.*(//' -e 's/).*//' ; }
-title() { <<< "$imdb" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" ; }
+title() { <<< "$imdbri" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" ; }
 originaltitle() { <<< "$imdbri" grep -A1 \(original\ title\) | sed 's/<[^>]*>//g' | sed 's/^[ \t]*//' | awk 'FNR == 2 {print}' ; }
 sorttitle() { <<< "$imdbri" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" | sed -e 's/^The //' | sed 's/^A //' ; }
 # plotsummary
