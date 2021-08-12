@@ -1,34 +1,38 @@
 # imdb2nfo
 
-This is a bash script that parses movie information from IMDB and outputs an XML-styled .nfo that can be read by Kodi. 
+This is a shell script that parses movie information from IMDB and outputs an XML-styled .nfo that can be read by Kodi. 
 
-## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### prerequisites ###
 
-### Prerequisites
+# - basic command line navigation skills on either terminal, putty, tmux, etc...
+# - this shell script has been fully tested to work with bash and zsh shells.
+# - this script requires 'curl' to pull information from imdb https servers.
+# - no APIs are required so it remains light and portable. 
 
-What things you need to install the software and how to install them
 
-```
-Give examples
-```
+### installation ###
 
-### Installing
+# - first, either download the zip or 'git clone' this to your local computer. 
+    https://github.com/rixwoodling/imdb2nfo/archive/refs/heads/master.zip
+    git clone https://github.com/rixwoodling/imdb2nfo.git
+    
+# - then, navigate to 'imdb2nfo.sh'. for example, if you unzipped this to your desktop:
+    cd ~/Desktop/imdb2nfo/
 
-A step by step series of examples that tell you how to get a development env running
+# - if you need to set executable permissions, run:
+    chmod +x ~/Desktop/imdb2nfo/imdb2nfo.sh
 
-Say what the step will be
+# - then, run:
+    ./imdb2nfo.sh
 
-```
-Give the example
-```
+# - if you see 'enter imdb id: tt ', it's ready to use.
 
-And repeat
 
-```
-until finished
-```
+### using imdb2nfo ###
+
+
+
 
 End with an example of getting some data out of the system or using it for a little demo
 
