@@ -132,8 +132,8 @@ read -p "enter imdb id: tt" id
 id="tt$id"
 
 # 7 back to back server calls are made to imdb and page information is assigned to these variables 
-imdbpg=$(curl -s https://www.imdb.com/title/$id/parentalguide &&
 imdbr=$(curl -s https://www.imdb.com/title/$id/ratings) &&
+imdbpg=$(curl -s https://www.imdb.com/title/$id/parentalguide &&
 imdbri=$(curl -s https://www.imdb.com/title/$id/releaseinfo) &&
 imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) &&
 imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary) &&
