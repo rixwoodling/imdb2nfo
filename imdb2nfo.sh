@@ -176,13 +176,19 @@ while true; do
 		[Yy]* ) echo "$(nfo)" > ${filename}.nfo;;
 		[Nn]* ) ;;
 	esac
+
+        echo ""
+	echo "send issues and requests to:"
+	echo "https://github.com/rixwoodling/imdb2nfo/issues"
+        echo ""
+
 # please donate to help out with development costs
-	echo ""
-	sleep 0.5s; echo "Be a HERO and donate to dev costs!"
-	sleep 0.5s; echo "BTC: 1BDsoLTwXhbuCBXWcouTB9ye1wfvZcbFGq"
-	sleep 0.5s; echo "DOGE: D8G9onJgca8aEH7Aq6aQFmhFHxpKtjnL3r"
-	sleep 0.5s;
-	echo ""
+#	echo ""
+#	sleep 0.5s; echo "Be a HERO and donate to dev costs!"
+#	sleep 0.5s; echo "BTC: 1BDsoLTwXhbuCBXWcouTB9ye1wfvZcbFGq"
+#	sleep 0.5s; echo "DOGE: D8G9onJgca8aEH7Aq6aQFmhFHxpKtjnL3r"
+#	sleep 0.5s;
+#	echo ""
 	exit;
 done
 
