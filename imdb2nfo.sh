@@ -19,7 +19,7 @@
 
 #genre1() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 2 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
 #genre2() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
-#mpaa() { <<< "$imdb" grep contentRating | sed -e 's/.*: "//' | sed -e 's/".*//' ; }
+#mpaa() { <<< "$imdbpg" grep certificates\=US | awk -F: '{print $2}' | sed 's/\".*//' ; }
 # releaseinfo
 year() { <<< "$imdbri" grep og\:title | awk -F\" '{print $2}' | sed 's/.*\ (//' | sed 's/).*//' ; }
 title() { <<< "$imdbri" grep og\:title | awk -F\" '{print $2}' | sed 's/).*//' | sed 's/\ (.*//' ; }
@@ -131,8 +131,8 @@ nfo() {
 read -p "enter imdb id: tt" id
 id="tt$id"
 
-# 6 total server calls are made to imdb and page information is assigned to these variables 
-#imdb=$(curl -s https://www.imdb.com/title/$id/ | sed 's/\:/\:\n/g') &&
+# 7 back to back server calls are made to imdb and page information is assigned to these variables 
+imdbpg=$(curl -s https://www.imdb.com/title/$id/parentalguide &&
 imdbr=$(curl -s https://www.imdb.com/title/$id/ratings) &&
 imdbri=$(curl -s https://www.imdb.com/title/$id/releaseinfo) &&
 imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) &&
