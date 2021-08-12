@@ -19,7 +19,8 @@
 
 #genre1() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 2 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
 #genre2() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
-#mpaa() { <<< "$imdbpg" grep certificates\=US | awk -F: '{print $2}' | sed 's/\".*//' ; }
+# parentalguide
+mpaa() { <<< "$imdbpg" grep certificates\=US | awk -F: '{print $2}' | sed 's/\".*//' ; }
 # releaseinfo
 year() { <<< "$imdbri" grep og\:title | awk -F\" '{print $2}' | sed 's/.*\ (//' | sed 's/).*//' ; }
 title() { <<< "$imdbri" grep og\:title | awk -F\" '{print $2}' | sed 's/).*//' | sed 's/\ (.*//' ; }
