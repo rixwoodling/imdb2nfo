@@ -26,23 +26,23 @@ title() { <<< "$imdbri" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<]
 originaltitle() { <<< "$imdbri" grep -A1 \(original\ title\) | sed 's/<[^>]*>//g' | sed 's/^[ \t]*//' | awk 'FNR == 2 {print}' ; }
 sorttitle() { <<< "$imdbri" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" | sed -e 's/^The //' | sed 's/^A //' ; }
 # plotsummary
-plot() { <<< "$imdbps" grep "\<p\>.*" | awk 'FNR == 1 {print}' | sed 's/.*<p>//' | sed 's/<\/p>//' ; } # works!
+plot() { <<< "$imdbps" grep "\<p\>.*" | awk 'FNR == 1 {print}' | sed 's/.*<p>//' | sed 's/<\/p>//' ; }
 # technical
 film() { <<< "$imdbt" grep -A3 Printed\ Film\ Format | awk 'FNR == 3 {print}' | sed 's/[ ]//g' ; }
 aspectratio() { <<< "$imdbt" grep -A20 Aspect\ Ratio | awk 'FNR == 3 {print}' | sed 's/[ ]//g' ; }
 # ratings
-rating() { <<< "$imdbr" grep ipl-rating-star__rating | awk 'FNR == 1 {print}' | sed 's/[^0-9]*//' | sed 's/<.*//' ; } # works!
+rating() { <<< "$imdbr" grep ipl-rating-star__rating | awk 'FNR == 1 {print}' | sed 's/[^0-9]*//' | sed 's/<.*//' ; }
 # companycredits
-studio() { <<< "$imdbcc" grep -A10 "Production\ Companies" | grep ^'>' | sed 's/^.//g' | sed 's/<[^>]*>.*//g' | awk 'FNR == 1 {print}' ; } # works!
+studio() { <<< "$imdbcc" grep -A10 "Production\ Companies" | grep ^'>' | sed 's/^.//g' | sed 's/<[^>]*>.*//g' | awk 'FNR == 1 {print}' ; }
 # fullcredits
-director() { <<< "$imdbfc" grep -A100 "id\=\"director" | grep -B50 "id\=\"writer" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; } # works!
-codirector() { <<< "$imdbfc" grep -A100 "id\=\"director" | grep -B50 "id\=\"writer" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } # works!
-writer() { <<< "$imdbfc" grep -A100 "id\=\"writer" | grep -B50 "id\=\"cast" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; } # works!
-cowriter() { <<< "$imdbfc" grep -A100 "id\=\"writer" | grep -B50 "id\=\"cast" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } # works!
-actor0() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; } # works!
-actor1() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } # works!
-actor2() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 3 {print}' ; } # works!
-actor3() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 4 {print}' ; } # works!
+director() { <<< "$imdbfc" grep -A100 "id\=\"director" | grep -B50 "id\=\"writer" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; }
+codirector() { <<< "$imdbfc" grep -A100 "id\=\"director" | grep -B50 "id\=\"writer" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } 
+writer() { <<< "$imdbfc" grep -A100 "id\=\"writer" | grep -A100 "/name/nm" | grep -B50 "id\=\"cast" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; }
+cowriter() { <<< "$imdbfc" grep -A100 "id\=\"writer" | grep -A100 "/name/nm" | grep -B50 "id\=\"cast" | grep ^'>' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; } 
+actor0() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 1 {print}' ; } 
+actor1() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 2 {print}' ; }
+actor2() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 3 {print}' ; }
+actor3() { <<< "$imdbfc" grep -A100 'id\=\"cast\"' | grep ^'>\ ' | sed 's/^..//g' | awk 'FNR == 4 {print}' ; }
 
 # create multiline xml and assign to variable named xml:
 nfo() {
