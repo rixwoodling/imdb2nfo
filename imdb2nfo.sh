@@ -15,19 +15,21 @@
 
 
 # FUNCTIONS ---
-
 # parse title from imdb and assign to function $(title):
-#title() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/<[^>]*>//g' -e 's/^[ \t]*//' | awk 'NF{NF-=3};1' ; }
-#originaltitle() { <<< "$imdb" grep originalTitle | sed -e 's/.*Title">//' -e 's/<.*//' ; }
-#sorttitle() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/<[^>]*>//g' -e 's/^[ \t]*//' | sed -e 's/^The //' -e 's/^A //' | awk 'NF{NF-=3};1' ; }
-#year() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/[^\(0-9\)]//g' -e 's/^.*(//' -e 's/).*//' ; }
+
 #genre1() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 2 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
 #genre2() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
 #mpaa() { <<< "$imdb" grep contentRating | sed -e 's/.*: "//' | sed -e 's/".*//' ; }
+# releaseinfo
+#year() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/[^\(0-9\)]//g' -e 's/^.*(//' -e 's/).*//' ; }
+title() { <<< "$imdb" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" ; }
+originaltitle() { <<< "$imdbri" grep -A1 \(original\ title\) | sed 's/<[^>]*>//g' | sed 's/^[ \t]*//' | awk 'FNR == 2 {print}' ; }
+sorttitle() { <<< "$imdbri" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" | sed -e 's/^The //' | sed 's/^A //' ; }
+# plotsummary
 plot() { <<< "$imdbps" grep "\<p\>.*" | awk 'FNR == 1 {print}' | sed 's/.*<p>//' | sed 's/<\/p>//' ; } # works!
-
-film() { <<< "$imdbt" grep -A 3 Printed\ Film\ Format | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' ; }
-#aspectratio() { <<< "$imdb" grep Aspect\ Ratio | sed -e 's/.*h4>//' -e 's/\ //g' ; }
+# technical
+film() { <<< "$imdbt" grep -A3 Printed\ Film\ Format | awk 'FNR == 3 {print}' | sed 's/[ ]//g' ; }
+aspectratio() { <<< "$imdbt" grep -A20 Aspect\ Ratio | awk 'FNR == 3 {print}' | sed 's/[ ]//g' ; }
 # ratings
 rating() { <<< "$imdbr" grep ipl-rating-star__rating | awk 'FNR == 1 {print}' | sed 's/[^0-9]*//' | sed 's/<.*//' ; } # works!
 # companycredits
@@ -128,22 +130,40 @@ nfo() {
 # input imdb id
 read -p "enter imdb id: tt" id
 id="tt$id"
-imdb=$(curl -s https://www.imdb.com/title/$id/ | sed 's/\:/\:\n/g') &&
+
+# 6 total server calls are made to imdb and page information is assigned to these variables 
+#imdb=$(curl -s https://www.imdb.com/title/$id/ | sed 's/\:/\:\n/g') &&
 imdbr=$(curl -s https://www.imdb.com/title/$id/ratings) &&
+imdbri=$(curl -s https://www.imdb.com/title/$id/releaseinfo) &&
 imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) &&
 imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary) &&
 imdbcc=$(curl -s https://www.imdb.com/title/$id/companycredits) &&
 imdbt=$(curl -s https://www.imdb.com/title/$id/technical)
 
 # sdout to verify all is correct before writing to file
-echo "id: $id" && echo "title: $(title)" && echo "original title: $(originaltitle)"
-echo "sort title: $(sorttitle)" && echo "year: $(year)" && echo "rated: $(mpaa)"
-echo "description: $(plot)" && echo "genre: $(genre1)" && echo "genre: $(genre2)"
-echo "rating: $(rating)" && echo "<--- cast & credits --->" && echo "studio: $(studio)"
-echo "director: $(director)" && echo "co-director: $(codirector)" && echo "writer: $(writer)"
-echo "co-writer: $(cowriter)" && echo "actor: $(actor0)" && echo "actor: $(actor1)"
-echo "actor: $(actor2)" && echo "actor: $(actor3)" && echo "<--- technical info --->"
-echo "aspect ratio: $(aspectratio)" && echo "film: $(film)" && echo "https://www.imdb.com/title/$id/"
+echo "id: $id" && echo "title: $(title)" && 
+echo "original title: $(originaltitle)" &&
+echo "sort title: $(sorttitle)" && 
+echo "year: $(year)" && 
+echo "rated: $(mpaa)" &&
+echo "description: $(plot)" && 
+echo "genre: $(genre1)" && 
+echo "genre: $(genre2)" &&
+echo "rating: $(rating)" && 
+echo "<--- cast & credits --->" && 
+echo "studio: $(studio)" &&
+echo "director: $(director)" && 
+echo "co-director: $(codirector)" && 
+echo "writer: $(writer)" &&
+echo "co-writer: $(cowriter)" && 
+echo "actor: $(actor0)" && 
+echo "actor: $(actor1)" &&
+echo "actor: $(actor2)" && 
+echo "actor: $(actor3)" && 
+echo "<--- technical info --->" &&
+echo "aspect ratio: $(aspectratio)" && 
+echo "film: $(film)" && 
+echo "https://www.imdb.com/title/$id/" &&
 
 # replace spaces in filename with periods
 filename=$(echo "$(title) $(year)" | sed -e 's/ /./g' -e 's/[^[:alnum:].]\+//g' | sed 's/\.\./\./g')
