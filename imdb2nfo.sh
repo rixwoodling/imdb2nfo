@@ -177,9 +177,10 @@ while true; do
 	esac
 # please donate to help out with development costs
 	echo ""
-	sleep 1s; echo "Be a HERO and donate to dev costs!"
+	sleep 0.5s; echo "Be a HERO and donate to dev costs!"
 	sleep 0.5s; echo "BTC: 1BDsoLTwXhbuCBXWcouTB9ye1wfvZcbFGq"
 	sleep 0.5s; echo "DOGE: D8G9onJgca8aEH7Aq6aQFmhFHxpKtjnL3r"
+	sleep 0.5s;
 	echo ""
 	exit;
 done
