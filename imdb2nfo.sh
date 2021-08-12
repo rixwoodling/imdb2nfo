@@ -21,10 +21,10 @@
 #genre2() { <<< "$imdb" grep -A 2 \"genre\"\: | awk 'FNR == 3 {print}' | sed -e 's/^[ \t]*//' -e 's/"//' | sed -e 's/".*//' ; }
 #mpaa() { <<< "$imdb" grep contentRating | sed -e 's/.*: "//' | sed -e 's/".*//' ; }
 # releaseinfo
-#year() { <<< "$imdb" grep IMDb\<\/title\> | sed -e 's/[^\(0-9\)]//g' -e 's/^.*(//' -e 's/).*//' ; }
-title() { <<< "$imdbri" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" ; }
+year() { <<< "$imdbri" grep og\:title | awk -F\" '{print $2}' | sed 's/.*\ (//' | sed 's/).*//' ; }
+title() { <<< "$imdbri" grep og\:title | awk -F\" '{print $2}' | sed 's/).*//' | sed 's/\ (.*//' ; }
 originaltitle() { <<< "$imdbri" grep -A1 \(original\ title\) | sed 's/<[^>]*>//g' | sed 's/^[ \t]*//' | awk 'FNR == 2 {print}' ; }
-sorttitle() { <<< "$imdbri" grep itemprop\=\'url\' | sed 's/^[^>]*>//g' | sed "s/[<].*//" | sed -e 's/^The //' | sed 's/^A //' ; }
+sorttitle() { <<< "$imdbri" grep og\:title | awk -F\" '{print $2}' | sed 's/).*//' | sed 's/\ (.*//' | sed -e 's/^The //' | sed 's/^A //' ; }
 # plotsummary
 plot() { <<< "$imdbps" grep "\<p\>.*" | awk 'FNR == 1 {print}' | sed 's/.*<p>//' | sed 's/<\/p>//' ; }
 # technical
