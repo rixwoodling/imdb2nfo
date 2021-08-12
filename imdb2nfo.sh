@@ -139,7 +139,7 @@ imdbri=$(curl -s https://www.imdb.com/title/$id/releaseinfo) ; printf '.' &&
 imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) ; printf '.' &&
 imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary) ; printf '.' &&
 imdbcc=$(curl -s https://www.imdb.com/title/$id/companycredits) ; printf '.' &&
-imdbt=$(curl -s https://www.imdb.com/title/$id/technical) ; printf '.' 
+imdbt=$(curl -s https://www.imdb.com/title/$id/technical) ; echo '.' 
 
 # sdout to verify all is correct before writing to file
 echo "id: $id" && echo "title: $(title)" && 
