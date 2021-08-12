@@ -133,13 +133,13 @@ read -p "enter imdb id: tt" id
 id="tt$id"
 
 # 7 back to back server calls are made to imdb and page information is assigned to these variables 
-imdbr=$(curl -s https://www.imdb.com/title/$id/ratings) &&
-imdbpg=$(curl -s https://www.imdb.com/title/$id/parentalguide) &&
-imdbri=$(curl -s https://www.imdb.com/title/$id/releaseinfo) &&
-imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) &&
-imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary) &&
-imdbcc=$(curl -s https://www.imdb.com/title/$id/companycredits) &&
-imdbt=$(curl -s https://www.imdb.com/title/$id/technical)
+imdbr=$(curl -s https://www.imdb.com/title/$id/ratings) ; echo '.' &&
+imdbpg=$(curl -s https://www.imdb.com/title/$id/parentalguide) ; echo '.' &&
+imdbri=$(curl -s https://www.imdb.com/title/$id/releaseinfo) ; echo '.' &&
+imdbfc=$(curl -s https://www.imdb.com/title/$id/fullcredits) ; echo '.' &&
+imdbps=$(curl -s https://www.imdb.com/title/$id/plotsummary) ; echo '.' &&
+imdbcc=$(curl -s https://www.imdb.com/title/$id/companycredits) ; echo '.' &&
+imdbt=$(curl -s https://www.imdb.com/title/$id/technical) ; echo '.' 
 
 # sdout to verify all is correct before writing to file
 echo "id: $id" && echo "title: $(title)" && 
